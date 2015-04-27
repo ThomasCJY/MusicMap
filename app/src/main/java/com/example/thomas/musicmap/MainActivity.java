@@ -1,15 +1,18 @@
 package com.example.thomas.musicmap;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -53,13 +56,42 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        ArrayAdapter<String> arrayAdapter;
+
         public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            String[] strings = {
+                    "Coldplay - 4/2 - 愚公移山",
+                    "逃跑计划 - 4/7 - MAO LIVE",
+                    "苏阳 - 4/8 - 61LiveHouse",
+                    "国家交响乐团 - 4/15 - 国家大剧院",
+                    "Coldplay - 4/2 - 愚公移山",
+                    "逃跑计划 - 4/7 - MAO LIVE",
+                    "苏阳 - 4/8 - 61LiveHouse",
+                    "国家交响乐团 - 4/15 - 国家大剧院",
+                    "Coldplay - 4/2 - 愚公移山",
+                    "逃跑计划 - 4/7 - MAO LIVE",
+                    "苏阳 - 4/8 - 61LiveHouse",
+                    "国家交响乐团 - 4/15 - 国家大剧院"
+            };
+
+            ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(strings));
+
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            ListView listView = (ListView)rootView.findViewById(R.id.listView_performance);
+            arrayAdapter = new ArrayAdapter<String>(
+                    getActivity(),
+                    R.layout.list_item_forecast,
+                    R.id.list_item_performance_textView,
+                    arrayList
+            );
+            listView.setAdapter(arrayAdapter);
+
+
             return rootView;
         }
     }
