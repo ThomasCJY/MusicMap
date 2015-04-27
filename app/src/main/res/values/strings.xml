@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MusicMap</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_performance_detail">performanceDetail</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_performance_fragment">performanceFragment</string>
 </resources>
