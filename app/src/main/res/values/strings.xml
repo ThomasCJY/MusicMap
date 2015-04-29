@@ -1,7 +1,33 @@
 <resources>
     <string name="app_name">MusicMap</string>
     <string name="action_settings">Settings</string>
+    <string name="action_map">MapView</string>
     <string name="title_activity_performance_detail">performanceDetail</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_performance_fragment">performanceFragment</string>
+    <string name="title_activity_settings">performanceSettings</string>
+
+    <!--<>This part is used for setting options-->
+    <string name="list_pref_location">地点</string>
+    <string name="pref_location_key">location</string>
+    <string name="list_pref_date">时间</string>
+    <string name="pref_date_key">date</string>
+
+    <string name="pref_date_hint">YYYYMMDD</string>
+    <string name="pref_date_default">20150415</string>
+
+    <string name="pref_location_label_bj">北京</string>
+    <string name="pref_location_label_sh">上海</string>
+    <string name="pref_location_label_gz">广州</string>
+    <string name="pref_location_label_nj">南京</string>
+
+    <string name="pref_location_bj">beijing</string>
+    <string name="pref_location_sh">shanghai</string>
+    <string name="pref_location_gz">guangzhou</string>
+    <string name="pref_location_nj">nanjing</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_map">mapActivity</string>
+
 </resources>

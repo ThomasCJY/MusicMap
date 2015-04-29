@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_location_options">
+        <item>@string/pref_location_label_bj</item>
+        <item>@string/pref_location_label_gz</item>
+        <item>@string/pref_location_label_nj</item>
+        <item>@string/pref_location_label_sh</item>
+    </string-array>
+
+    <string-array name="pref_location_values">
+        <item>@string/pref_location_bj</item>
+        <item>@string/pref_location_gz</item>
+        <item>@string/pref_location_nj</item>
+        <item>@string/pref_location_sh</item>
+    </string-array>
+
+
+</resources>

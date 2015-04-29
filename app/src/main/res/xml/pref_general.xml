@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="@string/pref_location_key"
+        android:title="@string/list_pref_location"
+        android:entries="@array/pref_location_options"
+        android:defaultValue="@string/pref_location_nj"
+        android:entryValues="@array/pref_location_values"></ListPreference>
+
+    <EditTextPreference
+        android:key="@string/pref_date_key"
+        android:title="@string/list_pref_date"
+        android:inputType="text"
+        android:singleLine="true"
+        android:defaultValue="@string/pref_date_default"
+        android:hint="@string/pref_date_hint"></EditTextPreference>
+
+
+</PreferenceScreen>
