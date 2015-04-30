@@ -4,7 +4,7 @@
         android:key="@string/pref_location_key"
         android:title="@string/list_pref_location"
         android:entries="@array/pref_location_options"
-        android:defaultValue="@string/pref_location_nj"
+        android:defaultValue="@string/pref_location_default"
         android:entryValues="@array/pref_location_values"></ListPreference>
 
     <EditTextPreference
