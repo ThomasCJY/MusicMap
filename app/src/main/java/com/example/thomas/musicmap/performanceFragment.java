@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -39,7 +38,7 @@ public class performanceFragment extends Fragment {
     private String[] strings;
     private String settingLocation;
 
-    private ArrayAdapter<String> arrayAdapter;
+    private PerformanceAdapter performanceAdapter;
 
     /**
      * A placeholder fragment containing a simple view.
@@ -91,19 +90,19 @@ public class performanceFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ListView listView = (ListView) rootView.findViewById(R.id.listView_performance);
-        arrayAdapter = new ArrayAdapter<String>(
+
+        performanceAdapter = new PerformanceAdapter(
                 getActivity(),
-                R.layout.list_item_forecast,
-                R.id.list_item_performance_textView,
                 new ArrayList<String>()
         );
-        listView.setAdapter(arrayAdapter);
+        listView.setAdapter(performanceAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String index = arrayAdapter.getItem(i);
-                Intent intent = new Intent(getActivity(), performanceDetail.class)
-                        .putExtra(Intent.EXTRA_TEXT, index);
+                String content = strings[i];
+                Intent intent = new Intent(getActivity(), performanceDetail.class);
+                        intent.putExtra(Intent.EXTRA_TEXT, content);
+                intent.putExtra("LString", settingLocation);
                 startActivity(intent);
             }
         });
@@ -145,6 +144,7 @@ public class performanceFragment extends Fragment {
             final String OWM_MUSICIAN="musician";
             final String OWM_LAT="lat";
             final String OWM_LNG="lng";
+            final String OWM_DES="description";
 
             final String FLAG="&-&";
 
@@ -158,11 +158,13 @@ public class performanceFragment extends Fragment {
                 String pname;
                 String time;
                 String musician;
+                String description;
 
                 // Get the JSON object representing the day
                 JSONObject singlePerformance = performanceArray.getJSONObject(i);
                 time = singlePerformance.getString(OWM_TIME);
                 musician = singlePerformance.getString(OWM_MUSICIAN);
+                description = singlePerformance.getString(OWM_DES);
 
                 JSONObject placeObject = singlePerformance.getJSONObject(OWM_PLACE);
                 pname = placeObject.getString(OWM_PNAME);
@@ -170,7 +172,7 @@ public class performanceFragment extends Fragment {
                 double lng = placeObject.getDouble(OWM_LNG);
 
                 resultStrs[i] = musician + FLAG + time + FLAG +
-                        pname + FLAG + lat +FLAG + lng;
+                        pname + FLAG + lat +FLAG + lng + FLAG + description;
             }
 
 
@@ -279,9 +281,9 @@ public class performanceFragment extends Fragment {
         protected void onPostExecute(String[] result){
             strings = result;
             if (result != null){
-                arrayAdapter.clear();
+                performanceAdapter.clear();
                 for (String s : result){
-                    arrayAdapter.add(s);
+                    performanceAdapter.add(s);
                 }
             }
         }

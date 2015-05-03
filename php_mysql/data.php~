@@ -1,8 +1,3 @@
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>DATA</title>
-</head>
-
 <?php
     require_once('config.php');
     // Clear the error message

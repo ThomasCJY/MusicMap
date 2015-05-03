@@ -29,7 +29,8 @@
          
          if($row_2){
             $place = array("pname"=>$row['place_name'], "lat"=>(double)$row['lat'], "lng"=>(double)$row['lng']);
-            $listitem = array("place"=>$place, "time"=>$row_2['time'], "musician"=>$row_2['musician']);
+            $listitem = array("place"=>$place, "time"=>$row_2['time'], "musician"=>$row_2['musician'], 
+                "description"=>$row_2['description']);
             array_push($arr, $listitem);
          }
 
@@ -39,3 +40,4 @@
     
     mysqli_close($dbc);
 ?>
+
