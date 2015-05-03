@@ -37,6 +37,7 @@ import java.util.Arrays;
 public class performanceFragment extends Fragment {
     private final String LOG_TAG = performanceFragment.class.getSimpleName();
     private String[] strings;
+    private String settingLocation;
 
     private ArrayAdapter<String> arrayAdapter;
 
@@ -69,6 +70,7 @@ public class performanceFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), mapActivity.class);
             intent.putStringArrayListExtra("info", aList);
+            intent.putExtra("LString",settingLocation);
             startActivity(intent);
             return true;
         }
@@ -125,6 +127,7 @@ public class performanceFragment extends Fragment {
         String date = prefs.getString(getString(R.string.pref_date_key),
                 getString(R.string.pref_date_default));
 
+        settingLocation = location;
         String[] params = new String[]{location, date};
         fetchPerformance.execute(params);
     }

@@ -3,6 +3,7 @@ package com.example.thomas.musicmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -13,6 +14,14 @@ import java.util.ArrayList;
 
 
 public class mapActivity extends FragmentActivity implements OnMapReadyCallback {
+    private final String LOG_TAG = mapActivity.class.getSimpleName();
+
+    private final LatLng nanjingLatLng = new LatLng(32.057961, 118.792683);
+    private final LatLng shanghaiLatLng = new LatLng(31.223175, 121.489112);
+    private final LatLng beijingLatLng = new LatLng(39.903601, 116.398146);
+    private final LatLng guangzhouLatLng = new LatLng(23.136964, 113.248444);
+
+    private final float ZOOMFLOATE = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +37,24 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap map) {
         //Read the location info from the intent
         //add Marker of all the places
+        String locationInfo = getIntent().getStringExtra("LString");
+//        Log.e(LOG_TAG, locationInfo);
+
+        switch (locationInfo){
+            case "nanjing":
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(nanjingLatLng,ZOOMFLOATE));
+                break;
+            case "shanghai":
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(shanghaiLatLng,ZOOMFLOATE));
+                break;
+            case "beijing":
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(beijingLatLng,ZOOMFLOATE));
+                break;
+            case "guangzhou":
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(guangzhouLatLng,ZOOMFLOATE));
+                break;
+        }
+
         ArrayList<String> strings = getIntent().getStringArrayListExtra("info");
 
         for(String ast : strings){

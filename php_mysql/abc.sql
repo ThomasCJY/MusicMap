@@ -27,6 +27,10 @@ INSERT INTO `place` VALUES(1,1,'青果', 32.059076, 118.770744);
 INSERT INTO `place` VALUES (2,1, '61LiveHouse', 32.054876 ,118.772693);
 INSERT INTO `place` VALUES (3,1,  '南京大剧院' ,32.033714, 118.775600);
 
+INSERT INTO `place` VALUES(4,2,'愚公移山', 39.933942, 116.414526);
+INSERT INTO `place` VALUES (5,2, 'MAO LiveHouse',39.941214, 116.403304);
+INSERT INTO `place` VALUES (6,2,  '麻雀瓦舍' ,39.892519, 116.473677);
+
 
 
 create table `performance`(
@@ -43,6 +47,10 @@ CONSTRAINT `performance_place`  FOREIGN KEY (`place_id`) REFERENCES `place`(`pla
 INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (1, '2015-04-02', 'Coldplay');
 INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (2, '2015-04-08', '苏阳');
 INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (3, '2015-04-15', '国家交响乐团');
+
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (4, '2015-05-22', '杭盖乐队');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (5, '2015-05-28', '万晓利');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (6, '2015-05-31', 'GREENDAY');
 
 
 -- create table users(
