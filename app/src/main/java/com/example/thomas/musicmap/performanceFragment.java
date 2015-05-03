@@ -3,6 +3,7 @@ package com.example.thomas.musicmap;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +39,7 @@ public class performanceFragment extends Fragment {
     private String[] strings;
 
     private ArrayAdapter<String> arrayAdapter;
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -50,7 +60,7 @@ public class performanceFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_map) {
             //Get all the string from strings
@@ -64,7 +74,7 @@ public class performanceFragment extends Fragment {
         }
 
 
-        if(id == R.id.action_refresh){
+        if (id == R.id.action_refresh) {
             updatePerformance();
             return true;
         }
@@ -90,7 +100,7 @@ public class performanceFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String index = arrayAdapter.getItem(i);
-                Intent intent = new Intent(getActivity(),performanceDetail.class)
+                Intent intent = new Intent(getActivity(), performanceDetail.class)
                         .putExtra(Intent.EXTRA_TEXT, index);
                 startActivity(intent);
             }
@@ -106,68 +116,172 @@ public class performanceFragment extends Fragment {
     }
 
 
-    private void updatePerformance(){
-
+    private void updatePerformance() {
+        FetchPerformance fetchPerformance = new FetchPerformance();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
         String location = prefs.getString(getString(R.string.pref_location_key),
                 getString(R.string.pref_location_default));
         String date = prefs.getString(getString(R.string.pref_date_key),
                 getString(R.string.pref_date_default));
-//        Log.e(LOG_TAG, "TEST GETSTRING: " + location + "/"+date);
 
-        //Build Url and Connect the localhost to
-        //query the required information
-        try {
-            // Construct the URL for the performance query
-            // Possible parameters are avaiable at Settings menu, at
-            // http://localhost/data
-            final String FORECAST_BASE_URL =
-                    "http://localhost/data?";
-            final String LOCATION_PARAM = "location";
-            final String DATE_PARAM = "date";
-
-            Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                    .appendQueryParameter(LOCATION_PARAM, location)
-                    .appendQueryParameter(DATE_PARAM, date)
-                    .build();
-
-            URL url = new URL(builtUri.toString());
-
-//            Log.e(LOG_TAG, url.toString());
-
-            //Connect localhost and acquire the information
-            //in JSON format
+        String[] params = new String[]{location, date};
+        fetchPerformance.execute(params);
+    }
 
 
-            //decode the JSON info into String[]
+    public class FetchPerformance extends AsyncTask<String[], Void, String[]> {
+        private final String LOG_TAG = FetchPerformance.class.getSimpleName();
+
+        private String[] getPerformanceDataFromJson(String PerformanceJsonStr)
+                throws JSONException {
+            final String OWM_PERFORM = "performance";
+            final String OWM_PLACE = "place";
+            final String OWM_PNAME ="pname";
+            final String OWM_TIME ="time";
+            final String OWM_MUSICIAN="musician";
+            final String OWM_LAT="lat";
+            final String OWM_LNG="lng";
+
+            final String FLAG="&-&";
+
+            JSONObject performJson = new JSONObject(PerformanceJsonStr);
+            JSONArray performanceArray = performJson.getJSONArray(OWM_PERFORM);
+
+            int len = performanceArray.length();
+            String resultStrs[] = new String[len];
+
+            for (int i = 0; i < len; i++){
+                String pname;
+                String time;
+                String musician;
+
+                // Get the JSON object representing the day
+                JSONObject singlePerformance = performanceArray.getJSONObject(i);
+                time = singlePerformance.getString(OWM_TIME);
+                musician = singlePerformance.getString(OWM_MUSICIAN);
+
+                JSONObject placeObject = singlePerformance.getJSONObject(OWM_PLACE);
+                pname = placeObject.getString(OWM_PNAME);
+                double lat = placeObject.getDouble(OWM_LAT);
+                double lng = placeObject.getDouble(OWM_LNG);
+
+                resultStrs[i] = musician + FLAG + time + FLAG +
+                        pname + FLAG + lat +FLAG + lng;
+            }
 
 
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Error ", e);
-
-        } finally {
-
+            for (String s : resultStrs) {
+                Log.v(LOG_TAG, "Forecast entry: " + s);
+            }
+            return resultStrs;
         }
 
-        //It's the temp string, will be replaced by
-        //the JSON decoded ones
-        strings = new String[]{
-                "Coldplay - 4/2 - 青果 - 32.059076 - 118.770744",
-                "逃跑计划 - 4/7 - MAO LIVE - 32.048338 - 118.788389",
-                "苏阳 - 4/8 - 61LiveHouse - 32.054876 - 118.772693",
-                "国家交响乐团 - 4/15 - 南京大剧院 - 32.033714 - 118.775600",
-        };
+        @Override
+        protected String[] doInBackground(String[]... params) {
+            if (params.length == 0) {
+                return null;
+            }
 
-        //This part may be moved into OnPostExecute later
-        if (strings != null) {
-            arrayAdapter.clear();
+            String location = params[0][0];
+            String date = params[0][1];
 
-            for(String dayForecastStr : strings) {
-                arrayAdapter.add(dayForecastStr);
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
+
+            // Will contain the raw JSON response as a string.
+            String forecastJsonStr = null;
+
+            //Build Url and Connect the localhost to
+            //query the required information
+            try {
+                // Construct the URL for the performance query
+                // Possible parameters are avaiable at Settings menu, at
+                // http://localhost/data
+                final String FORECAST_BASE_URL =
+                        "http://10.0.2.2/data.php?";
+                final String LOCATION_PARAM = "location";
+                final String DATE_PARAM = "date";
+
+                Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
+                        .appendQueryParameter(LOCATION_PARAM, location)
+                        .appendQueryParameter(DATE_PARAM, date)
+                        .build();
+
+                URL url = new URL(builtUri.toString());
+
+                Log.v(LOG_TAG, "Built URI " + builtUri.toString());
+
+                //Connect localhost and acquire the information
+                //in JSON format
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+                // Read the input stream into a String
+                InputStream inputStream = urlConnection.getInputStream();
+                StringBuffer buffer = new StringBuffer();
+                if (inputStream == null) {
+                    // Nothing to do.
+                    return null;
+                }
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+                    // But it does make debugging a *lot* easier if you print out the completed
+                    // buffer for debugging.
+                    buffer.append(line + "\n");
+                }
+
+                if (buffer.length() == 0) {
+                    // Stream was empty.  No point in parsing.
+                    return null;
+                }
+                forecastJsonStr = buffer.toString();
+                Log.v(LOG_TAG, "Forecast string: " + forecastJsonStr);
+
+                //decode the JSON info into String[]
+
+
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
+
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
+                }
+            }
+
+            try {
+                return getPerformanceDataFromJson(forecastJsonStr);
+            } catch (JSONException e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String[] result){
+            strings = result;
+            if (result != null){
+                arrayAdapter.clear();
+                for (String s : result){
+                    arrayAdapter.add(s);
+                }
             }
         }
-
-
     }
 
 

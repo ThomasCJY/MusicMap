@@ -15,8 +15,8 @@
     <string name="list_pref_date">时间</string>
     <string name="pref_date_key">date</string>
 
-    <string name="pref_date_hint">YYYYMMDD</string>
-    <string name="pref_date_default">20150415</string>
+    <string name="pref_date_hint">YYYY-MM-DD</string>
+    <string name="pref_date_default">2015-04-06</string>
 
     <string name="pref_location_label_bj">北京</string>
     <string name="pref_location_label_sh">上海</string>

@@ -31,7 +31,7 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback 
         ArrayList<String> strings = getIntent().getStringArrayListExtra("info");
 
         for(String ast : strings){
-            String[] parser = ast.split(" - ");
+            String[] parser = ast.split("&-&");
             double lat = Double.parseDouble(parser[3]);
             double lng = Double.parseDouble(parser[4]);
             map.addMarker(new MarkerOptions()
