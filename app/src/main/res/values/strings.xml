@@ -6,17 +6,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_performance_fragment">performanceFragment</string>
     <string name="title_activity_settings">performanceSettings</string>
-    <string name="title_refresh">Refresh</string>
 
     <!--<>This part is used for setting options-->
     <string name="list_pref_location">地点</string>
     <string name="pref_location_key">location</string>
     <string name="pref_location_default">nanjing</string>
-    <string name="list_pref_date">时间</string>
-    <string name="pref_date_key">date</string>
-
-    <string name="pref_date_hint">YYYY-MM-DD</string>
-    <string name="pref_date_default">2015-04-06</string>
 
     <string name="pref_location_label_bj">北京</string>
     <string name="pref_location_label_sh">上海</string>
@@ -28,8 +22,23 @@
     <string name="pref_location_gz">guangzhou</string>
     <string name="pref_location_nj">nanjing</string>
 
+    <string name="pref_dob_value">日期选择</string>
+    <string name="pref_dob_key">dob</string>
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_map">mapActivity</string>
+
+    <string name="pref_duration_key">duration</string>
+    <string name="pref_duration_value">查询范围</string>
+    <string name="pref_duration_default">all</string>
+
+    <string name="pref_duration_label_week">未来一周</string>
+    <string name="pref_duration_label_month">未来一月</string>
+    <string name="pref_duration_label_all">未来所有</string>
+
+    <string name="pref_duration_week">week</string>
+    <string name="pref_duration_month">month</string>
+    <string name="pref_duration_all">all</string>
 
 </resources>

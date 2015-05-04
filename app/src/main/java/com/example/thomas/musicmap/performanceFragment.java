@@ -27,8 +27,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Created by thomas on 15-4-27.
@@ -74,11 +76,6 @@ public class performanceFragment extends Fragment {
             return true;
         }
 
-
-        if (id == R.id.action_refresh) {
-            updatePerformance();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
 
     }
@@ -117,17 +114,22 @@ public class performanceFragment extends Fragment {
     }
 
 
-    private void updatePerformance() {
+    public void updatePerformance() {
         FetchPerformance fetchPerformance = new FetchPerformance();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String location = prefs.getString(getString(R.string.pref_location_key),
                 getString(R.string.pref_location_default));
-        String date = prefs.getString(getString(R.string.pref_date_key),
-                getString(R.string.pref_date_default));
-
         settingLocation = location;
-        String[] params = new String[]{location, date};
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateValue = DateDialogPreference.getDateFor(prefs,"dob").getTime();
+        String date = sdf.format(dateValue);
+
+        String duration = prefs.getString(getString(R.string.pref_duration_key),
+                getString(R.string.pref_duration_default));
+
+        String[] params = new String[]{location, date, duration};
         fetchPerformance.execute(params);
     }
 
@@ -190,6 +192,7 @@ public class performanceFragment extends Fragment {
 
             String location = params[0][0];
             String date = params[0][1];
+            String duration = params[0][2];
 
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
@@ -207,10 +210,12 @@ public class performanceFragment extends Fragment {
                         "http://10.0.2.2/data.php?";
                 final String LOCATION_PARAM = "location";
                 final String DATE_PARAM = "date";
+                final String DUR_PARAM = "duration";
 
                 Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                         .appendQueryParameter(LOCATION_PARAM, location)
                         .appendQueryParameter(DATE_PARAM, date)
+                        .appendQueryParameter(DUR_PARAM,duration)
                         .build();
 
                 URL url = new URL(builtUri.toString());

@@ -7,13 +7,15 @@
         android:defaultValue="@string/pref_location_default"
         android:entryValues="@array/pref_location_values"></ListPreference>
 
-    <EditTextPreference
-        android:key="@string/pref_date_key"
-        android:title="@string/list_pref_date"
-        android:inputType="text"
-        android:singleLine="true"
-        android:defaultValue="@string/pref_date_default"
-        android:hint="@string/pref_date_hint"></EditTextPreference>
+    <com.example.thomas.musicmap.DateDialogPreference
+        android:key="@string/pref_dob_key" android:title="@string/pref_dob_value"
+        />
 
+    <ListPreference
+        android:key="@string/pref_duration_key"
+        android:title="@string/pref_duration_value"
+        android:entries="@array/pref_duration_options"
+        android:entryValues="@array/pref_duration_values"
+        android:defaultValue="@string/pref_duration_default"></ListPreference>
 
 </PreferenceScreen>
