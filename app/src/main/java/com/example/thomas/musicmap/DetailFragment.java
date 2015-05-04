@@ -46,7 +46,7 @@ public class DetailFragment extends Fragment {
         if (id == R.id.action_map) {
             ArrayList<String> aList = new ArrayList<>(Arrays.asList(content));
 
-            Intent intent = new Intent(getActivity(), mapActivity.class);
+            Intent intent = new Intent(getActivity(), MapActivity.class);
             intent.putStringArrayListExtra("info", aList);
             intent.putExtra("LString",settingLocation);
             startActivity(intent);

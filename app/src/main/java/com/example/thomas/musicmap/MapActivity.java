@@ -13,8 +13,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
 
-public class mapActivity extends FragmentActivity implements OnMapReadyCallback {
-    private final String LOG_TAG = mapActivity.class.getSimpleName();
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+    private final String LOG_TAG = MapActivity.class.getSimpleName();
 
     private final LatLng nanjingLatLng = new LatLng(32.057961, 118.792683);
     private final LatLng shanghaiLatLng = new LatLng(31.223175, 121.489112);

@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".performanceDetail"
+            android:name=".PerformanceDetail"
             android:label="@string/title_activity_performance_detail"
             android:parentActivityName=".MainActivity" >
             <meta-data
@@ -39,7 +39,7 @@
                 android:value="com.example.thomas.musicmap.MainActivity" />
         </activity>
         <activity
-            android:name=".settingActivity"
+            android:name=".SettingActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".MainActivity" >
             <meta-data
@@ -55,7 +55,7 @@
             android:value="AIzaSyBkj6tDVTVR_9MUz5MVqTW0IjSbu2zqmXo" />
 
         <activity
-            android:name=".mapActivity"
+            android:name=".MapActivity"
             android:label="@string/title_activity_map"
             android:parentActivityName=".MainActivity" >
             <meta-data

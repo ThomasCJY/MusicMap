@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class performanceDetail extends ActionBarActivity {
+public class PerformanceDetail extends ActionBarActivity {
 
 
     @Override

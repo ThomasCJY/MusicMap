@@ -16,7 +16,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new performanceFragment())
+                    .add(R.id.container, new PerformanceFragment())
                     .commit();
         }
 
@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
 
 
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, settingActivity.class));
+            startActivity(new Intent(this, SettingActivity.class));
             return true;
         }
 

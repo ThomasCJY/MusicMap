@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
-public class settingActivity extends Activity{
-    public settingActivity(){
+public class SettingActivity extends Activity{
+    public SettingActivity(){
     }
 
     @Override
