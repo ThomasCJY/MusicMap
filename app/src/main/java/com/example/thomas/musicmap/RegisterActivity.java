@@ -67,12 +67,22 @@ public class RegisterActivity extends Activity {
                 String email = inputEmail.getText().toString();
                 String password = inputPassword.getText().toString();
 
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    registerUser(name, email, password);
-                } else {
+                if (name.isEmpty() || email.isEmpty() || password.isEmpty()){
                     Toast.makeText(getApplicationContext(),
                             "Please enter your details!", Toast.LENGTH_LONG)
                             .show();
+                }
+                else if (!Utility.checkEmailFormat(email)) {
+                    Toast.makeText(getApplicationContext(),
+                            "Email Format is not correct!", Toast.LENGTH_LONG)
+                            .show();
+                }
+                else if (password.length()<6){
+                    Toast.makeText(getApplicationContext(),
+                            "Password should be at least 6 digits!", Toast.LENGTH_LONG)
+                            .show();
+                }else {
+                    registerUser(name, email, password);
                 }
             }
         });
@@ -150,7 +160,9 @@ public class RegisterActivity extends Activity {
                 params.put("tag", "register");
                 params.put("name", name);
                 params.put("email", email);
-                params.put("password", password);
+
+                String shaPwd = Utility.shaPassword(password);
+                params.put("password", shaPwd);
 
                 return params;
             }

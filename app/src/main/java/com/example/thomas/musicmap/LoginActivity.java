@@ -155,9 +155,12 @@ public class LoginActivity extends Activity {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
+
+                String shaPwd = Utility.shaPassword(password);
+
                 params.put("tag", "login");
                 params.put("email", email);
-                params.put("password", password);
+                params.put("password", shaPwd);
 
                 return params;
             }
