@@ -142,7 +142,7 @@ public class PerformanceFragment extends Fragment {
         // Possible parameters are avaiable at Settings menu, at
         // http://localhost/data
         final String FORECAST_BASE_URL =
-                "http://10.0.2.2/data.php?";
+                "http://10.0.2.2/androidProject/data.php?";
         final String LOCATION_PARAM = "location";
         final String DATE_PARAM = "date";
         final String DUR_PARAM = "duration";

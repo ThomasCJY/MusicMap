@@ -6,6 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_performance_fragment">performanceFragment</string>
     <string name="title_activity_settings">performanceSettings</string>
+    <string name="action_profile">Profile</string>
 
     <!--<>This part is used for setting options-->
     <string name="list_pref_location">地点</string>
@@ -40,5 +41,20 @@
     <string name="pref_duration_week">week</string>
     <string name="pref_duration_month">month</string>
     <string name="pref_duration_all">all</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <string name="app_login_name">Android Login and Registration</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Fullname</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_register">REGISTER</string>
+    <string name="btn_link_to_register">Not a member? Sign up now.</string>
+    <string name="btn_link_to_login">Already registred! Login Me.</string>
+    <string name="welcome">Welcome</string>
+    <string name="btn_logout">LOGOUT</string>
+    <string name="name">Fullname</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>
