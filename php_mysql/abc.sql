@@ -89,3 +89,16 @@ INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (13, '2015-05-14'
 INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (14, '2015-05-28', 'Voodoo');
 INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (15, '2015-05-29', '周杰伦');
 INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (8, '2015-05-14', 'Taylor Swift');
+
+
+
+create table `user`(
+    `uid` INT auto_increment,
+    `unique_id` varchar(23),
+    `name` varchar(50),
+    `email` varchar(100),
+    `password` varchar(40),
+    PRIMARY KEY(`uid`),
+    CONSTRAINT `unique_email` UNIQUE (`email`)
+)character set = utf8;
+

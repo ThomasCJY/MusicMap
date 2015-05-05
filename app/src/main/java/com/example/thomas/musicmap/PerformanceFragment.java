@@ -136,7 +136,7 @@ public class PerformanceFragment extends Fragment {
     }
 
     private String BuildURL(String location, String date, String duration) {
-        String url = "";
+        String url;
 
         // Construct the URL for the performance query
         // Possible parameters are avaiable at Settings menu, at
@@ -182,7 +182,6 @@ public class PerformanceFragment extends Fragment {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
                         Log.e(LOG_TAG, "Error in RequestJSON");
                     }
                 });
