@@ -43,7 +43,7 @@ while ($row = mysqli_fetch_array($data_place)) {
     if ($row_2) {
         $place = array("pname" => $row['place_name'], "lat" => (double)$row['lat'], "lng" => (double)$row['lng']);
         $list_item = array("place" => $place, "time" => $row_2['time'], "musician" => $row_2['musician'],
-            "description" => $row_2['description'], "city"=> $location);
+            "description" => $row_2['description'], "city"=> $location, "pid" => $row_2['performance_id']);
         array_push($arr, $list_item);
     }
 

@@ -53,6 +53,7 @@ public class Utility {
         final String OWM_LNG = "lng";
         final String OWM_DES = "description";
         final String OWM_CITY = "city";
+        final String OWM_PID = "pid";
 
         final String FLAG = "&-&";
 
@@ -67,6 +68,7 @@ public class Utility {
             String musician;
             String description;
             String city;
+            String pid;
 
             // Get the JSON object representing the day
             JSONObject singlePerformance = performanceArray.getJSONObject(i);
@@ -74,6 +76,7 @@ public class Utility {
             musician = singlePerformance.getString(OWM_MUSICIAN);
             description = singlePerformance.getString(OWM_DES);
             city = singlePerformance.getString(OWM_CITY);
+            pid = singlePerformance.getString(OWM_PID);
 
             JSONObject placeObject = singlePerformance.getJSONObject(OWM_PLACE);
             pname = placeObject.getString(OWM_PNAME);
@@ -82,7 +85,7 @@ public class Utility {
 
             resultStrs[i] = musician + FLAG + time + FLAG +
                     pname + FLAG + lat + FLAG + lng + FLAG + description +
-                    FLAG + city;
+                    FLAG + city + FLAG + pid;
         }
 
         return resultStrs;

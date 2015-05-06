@@ -3,6 +3,7 @@ package com.example.thomas.musicmap;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,17 +11,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by thomas on 15-5-3.
  */
 public class DetailFragment extends Fragment {
     //content is used to convey information
+
+    private final String LOG_TAG = DetailFragment.class.getSimpleName();
     private String content;
     private String settingLocation;
+    private String pid;
 
     public DetailFragment() {
     }
@@ -48,11 +63,16 @@ public class DetailFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), MapActivity.class);
             intent.putStringArrayListExtra("info", aList);
-            intent.putExtra("LString",settingLocation);
+            intent.putExtra("LString", settingLocation);
             startActivity(intent);
             return true;
 
         }
+
+        if (id == R.id.action_like) {
+            addToFavourite();
+        }
+
         return super.onOptionsItemSelected(item);
 
     }
@@ -68,8 +88,9 @@ public class DetailFragment extends Fragment {
             content = intent.getStringExtra(Intent.EXTRA_TEXT);
             String[] temp = content.split("&-&");
             settingLocation = temp[6];
+            pid = temp[7];
 
-            TextView musician =  (TextView) rootView.findViewById(R.id.detail_musician);
+            TextView musician = (TextView) rootView.findViewById(R.id.detail_musician);
             TextView time = (TextView) rootView.findViewById(R.id.detail_time);
             TextView place = (TextView) rootView.findViewById(R.id.detail_place);
             TextView description = (TextView) rootView.findViewById(R.id.detail_description);
@@ -82,6 +103,57 @@ public class DetailFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    private void addToFavourite() {
+        SessionManager session = new SessionManager(getActivity());
+        final String uuid = session.checkUID();
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_LIKE, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    Log.e(LOG_TAG,response);
+                    boolean error = jObj.getBoolean("error");
+                    Log.e(LOG_TAG,String.valueOf(error));
+                    if (!error){
+                        Toast.makeText(getActivity(), "Add into your favourites!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        String e = jObj.getString("error_msg");
+                        Toast.makeText(getActivity(), e,
+                                Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(),
+                                error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("tag", "like");
+                params.put("uuid", uuid);
+                params.put("p_id", pid);
+
+                return params;
+            }
+        };
+
+        MySingleton.getInstance(getActivity()).addToRequestQueue(strReq);
+
     }
 
 

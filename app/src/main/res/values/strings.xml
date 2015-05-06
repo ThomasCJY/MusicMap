@@ -7,6 +7,7 @@
     <string name="title_activity_performance_fragment">performanceFragment</string>
     <string name="title_activity_settings">performanceSettings</string>
     <string name="action_profile">Profile</string>
+    <string name="action_like">加入收藏</string>
 
     <!--<>This part is used for setting options-->
     <string name="list_pref_location">地点</string>

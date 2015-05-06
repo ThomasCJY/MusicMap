@@ -4,5 +4,7 @@
     tools:context="com.example.thomas.musicmap.PerformanceDetail">
     <item android:id="@+id/action_map" android:title="@string/action_map"
         android:orderInCategory="100" app:showAsAction="never"/>
+    <item android:id="@+id/action_like" android:title="@string/action_like"
+        android:orderInCategory="100" app:showAsAction="never"/>
 
 </menu>

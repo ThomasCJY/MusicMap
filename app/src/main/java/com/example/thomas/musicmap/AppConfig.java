@@ -12,4 +12,6 @@ public class AppConfig {
 
     public static String URL_PROFILE = "http://10.0.2.2/androidProject/profile.php";
 
+    public static String URL_LIKE = "http://10.0.2.2/androidProject/like.php";
+
 }

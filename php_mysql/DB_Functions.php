@@ -120,12 +120,20 @@ class DB_Functions {
                 $list_item = array("place" => $place, "time" => $data_performance['time'],
                     "musician" => $data_performance['musician'],
                     "description" => $data_performance['description'],
-                    "city" => $data_city['city_name']);
+                    "city" => $data_city['city_name'],
+                    "pid" => $data_performance['performance_id']);
                 array_push($arr, $list_item);
             }
         }
 
         return $arr;
+    }
+
+    public function insertFavourite($uuid, $p_id){
+        $query = "INSERT INTO favourite VALUES(". $p_id .",'$uuid');";
+        $data = mysqli_query($this->con, $query);
+        return $data;
+
     }
 
 }
