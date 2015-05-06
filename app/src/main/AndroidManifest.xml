@@ -80,6 +80,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.thomas.musicmap.MainActivity" />
         </activity>
+        <activity
+            android:name=".FavouriteActivity"
+            android:label="@string/title_activity_favourite" >
+        </activity>
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class ProfileActivity extends Activity {
     private TextView txtName;
     private TextView txtEmail;
     private Button btnLogout;
+    private ImageView picImg;
     private SessionManager session;
 
     @Override
@@ -37,6 +39,7 @@ public class ProfileActivity extends Activity {
 
         txtName = (TextView) findViewById(R.id.name);
         txtEmail = (TextView) findViewById(R.id.email);
+        picImg = (ImageView) findViewById(R.id.image);
         btnLogout = (Button) findViewById(R.id.btnLogout);
 
         // session manager
@@ -100,10 +103,6 @@ public class ProfileActivity extends Activity {
         };
         MySingleton.getInstance(this).addToRequestQueue(strReq);
 
-        // Favourite Activity button click event
-
-
-
         // Logout button click event
         btnLogout.setOnClickListener(new View.OnClickListener() {
 
@@ -111,6 +110,18 @@ public class ProfileActivity extends Activity {
             public void onClick(View v) {
                 logoutUser();
             }
+        });
+
+        // Favourite Activity button click event
+
+        picImg.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, FavouriteActivity.class);
+                startActivity(intent);
+            }
+
         });
     }
 

@@ -102,3 +102,23 @@ create table `user`(
     CONSTRAINT `unique_email` UNIQUE (`email`)
 )character set = utf8;
 
+
+create table `favourite`(
+	`p_id` INT,
+	`uuid` varchar(23),
+ 	PRIMARY KEY(`p_id`,`uuid`)
+)character set = utf8;
+
+INSERT INTO `favourite` VALUES (8, '55489ada07c119.20995428');
+INSERT INTO `favourite` VALUES (14, '55489ada07c119.20995428');
+INSERT INTO `favourite` VALUES (18, '55489ada07c119.20995428');
+INSERT INTO `favourite` VALUES (20, '55489ada07c119.20995428');
+
+
+
+
+
+
+
+
+

@@ -79,7 +79,38 @@ Green Day was originally part of the punk scene at the DIY 924 Gilman Street clu
 
 
 
-INSERT INTO `performance`(`place_id`,`time`,`musician`, `description`) VALUES (7, '2015-05-28', '');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (7, '2015-05-01', '上海草莓音乐节');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (8, '2015-05-02', '乔伊斯•迪多纳托');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (9, '2015-05-11', '李志');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (10, '2015-05-22', '西城男孩');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (11, '2015-05-15', 'Toman');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (12, '2015-05-13', 'Limp Bizkit');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (13, '2015-05-14', 'Blur');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (14, '2015-05-28', 'Voodoo');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (15, '2015-05-29', '周杰伦');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (8, '2015-05-14', 'Taylor Swift');
 
 
+
+create table `user`(
+    `uid` INT auto_increment,
+    `unique_id` varchar(23),
+    `name` varchar(50),
+    `email` varchar(100),
+    `password` varchar(40),
+    PRIMARY KEY(`uid`),
+    CONSTRAINT `unique_email` UNIQUE (`email`)
+)character set = utf8;
+
+
+create table `favourite`(
+	`p_id` INT,
+	`uuid` varchar(23),
+ 	PRIMARY KEY(`p_id`,`uuid`)
+)character set = utf8;
+
+INSERT INTO `favourite` VALUES (8, '55489ada07c119.20995428');
+INSERT INTO `favourite` VALUES (14, '55489ada07c119.20995428');
+INSERT INTO `favourite` VALUES (18, '55489ada07c119.20995428');
+INSERT INTO `favourite` VALUES (20, '55489ada07c119.20995428');
 

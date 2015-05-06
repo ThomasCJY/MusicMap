@@ -21,7 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -74,6 +73,16 @@ public class PerformanceFragment extends Fragment {
             return true;
         }
 
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(getActivity(), SettingActivity.class));
+            return true;
+        }
+
+        if (id == R.id.action_profile){
+            startActivity(new Intent(getActivity(), ProfileActivity.class));
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
 
     }
@@ -97,7 +106,6 @@ public class PerformanceFragment extends Fragment {
                 String content = strings[i];
                 Intent intent = new Intent(getActivity(), PerformanceDetail.class);
                 intent.putExtra(Intent.EXTRA_TEXT, content);
-                intent.putExtra("LString", settingLocation);
                 startActivity(intent);
             }
         });
@@ -166,7 +174,7 @@ public class PerformanceFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            strings = getPerformanceDataFromJson(response);
+                            strings = Utility.getPerformanceDataFromJson(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -188,50 +196,6 @@ public class PerformanceFragment extends Fragment {
         MySingleton.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
     }
 
-    private String[] getPerformanceDataFromJson(JSONObject performJson)
-            throws JSONException {
-        final String OWM_PERFORM = "performance";
-        final String OWM_PLACE = "place";
-        final String OWM_PNAME = "pname";
-        final String OWM_TIME = "time";
-        final String OWM_MUSICIAN = "musician";
-        final String OWM_LAT = "lat";
-        final String OWM_LNG = "lng";
-        final String OWM_DES = "description";
 
-        final String FLAG = "&-&";
-
-        JSONArray performanceArray = performJson.getJSONArray(OWM_PERFORM);
-
-        int len = performanceArray.length();
-        String resultStrs[] = new String[len];
-
-        for (int i = 0; i < len; i++) {
-            String pname;
-            String time;
-            String musician;
-            String description;
-
-            // Get the JSON object representing the day
-            JSONObject singlePerformance = performanceArray.getJSONObject(i);
-            time = singlePerformance.getString(OWM_TIME);
-            musician = singlePerformance.getString(OWM_MUSICIAN);
-            description = singlePerformance.getString(OWM_DES);
-
-            JSONObject placeObject = singlePerformance.getJSONObject(OWM_PLACE);
-            pname = placeObject.getString(OWM_PNAME);
-            double lat = placeObject.getDouble(OWM_LAT);
-            double lng = placeObject.getDouble(OWM_LNG);
-
-            resultStrs[i] = musician + FLAG + time + FLAG +
-                    pname + FLAG + lat + FLAG + lng + FLAG + description;
-        }
-
-
-        for (String s : resultStrs) {
-            Log.v(LOG_TAG, "Forecast entry: " + s);
-        }
-        return resultStrs;
-    }
 
 }

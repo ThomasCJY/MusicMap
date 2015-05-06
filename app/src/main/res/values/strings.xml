@@ -56,5 +56,6 @@
     <string name="name">Fullname</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_favourite">FavouriteActivity</string>
 
 </resources>

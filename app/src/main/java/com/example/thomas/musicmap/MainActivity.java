@@ -40,15 +40,6 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
 
 
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingActivity.class));
-            return true;
-        }
-
-        if (id == R.id.action_profile){
-            startActivity(new Intent(this, ProfileActivity.class));
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -83,6 +83,51 @@ class DB_Functions {
         }
     }
 
+    public function getUserByUUID($uuid){
+        $query = "SELECT name, email from user WHERE unique_id = '$uuid';";
+        $result = mysqli_query($this->con, $query );
+        $no_of_rows = mysqli_num_rows($result);
+        if ($no_of_rows > 0) {
+            return mysqli_fetch_array($result);
+        } else {
+            // uuid not found
+            return false;
+        }
+    }
+
+    public function getPerformanceByUUID($uuid){
+        $query_1 = "SELECT p_id from favourite WHERE uuid = '$uuid';";
+        $id_array = mysqli_query($this->con, $query_1);
+        $arr = array();
+
+        while($id = mysqli_fetch_array($id_array)){
+            $query_2 = "SELECT * from performance WHERE performance_id = ".$id['p_id'].";";
+            $data = mysqli_query($this->con, $query_2);
+            $data_performance = mysqli_fetch_array($data);
+
+            if($data_performance){
+                $place_id = $data_performance['place_id'];
+                $query_3 = "SELECT * from place WHERE place_id = ". $place_id. ";";
+                $res_place = mysqli_query($this->con, $query_3);
+                $data_place = mysqli_fetch_array($res_place);
+
+                $query_4 = "SELECT city_name from city WHERE city_id = ".$data_place['city_id'].";";
+                $res_city = mysqli_query($this->con, $query_4);
+                $data_city = mysqli_fetch_array($res_city);
+
+                $place = array("pname" => $data_place['place_name'],
+                    "lat" => (double)$data_place['lat'], "lng" => (double)$data_place['lng']);
+                $list_item = array("place" => $place, "time" => $data_performance['time'],
+                    "musician" => $data_performance['musician'],
+                    "description" => $data_performance['description'],
+                    "city" => $data_city['city_name']);
+                array_push($arr, $list_item);
+            }
+        }
+
+        return $arr;
+    }
+
 }
 
 ?>

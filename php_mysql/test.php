@@ -5,8 +5,8 @@
  * Date: 15-5-5
  * Time: 上午10:27
  */
-$url = 'http://localhost/androidProject/index.php';
-$data = array('tag'=>'login','name' => 'value1','email'=>'4@qq.com', 'password' => 'value2');
+$url = 'http://localhost/androidProject/profile.php';
+$data = array('tag'=>'profile','unique_id' => '55486c64e26206.31580395');
 
 // use key 'http' even if you send the request to https://...
 $options = array(

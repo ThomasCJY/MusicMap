@@ -67,7 +67,7 @@ public class DetailFragment extends Fragment {
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             content = intent.getStringExtra(Intent.EXTRA_TEXT);
             String[] temp = content.split("&-&");
-            settingLocation = intent.getStringExtra("LString");
+            settingLocation = temp[6];
 
             TextView musician =  (TextView) rootView.findViewById(R.id.detail_musician);
             TextView time = (TextView) rootView.findViewById(R.id.detail_time);
