@@ -19,15 +19,33 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
     $uuid = $_POST['uuid'];
     $p_id = $_POST['p_id'];
 
-    $res = $db->insertFavourite($uuid, $p_id);
+    if($tag == 'like'){
 
-    if($res){
-        echo json_encode($response);
-    }else{
-        $response["error"] = TRUE;
-        $response["error_msg"] = "Insert repeatedly!";
-        echo json_encode($response);
+        $res = $db->insertFavourite($uuid, $p_id);
+
+        if($res){
+            echo json_encode($response);
+        }else{
+            $response["error"] = TRUE;
+            $response["error_msg"] = "Insert repeatedly!";
+            echo json_encode($response);
+        }
     }
+
+    //When tag == 'delete';
+    else {
+
+        $res = $db->deleteFavourite($uuid, $p_id);
+
+        if($res == 1){
+            echo json_encode($response);
+        }else{
+            $response["error"] = TRUE;
+            $response["error_msg"] = "No match Information!";
+            echo json_encode($response);
+        }
+    }
+
 
 }else{
     $response["error"] = TRUE;

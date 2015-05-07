@@ -5,16 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.ArraySwipeAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,9 +33,9 @@ import java.util.Map;
 
 public class FavouriteActivity extends ActionBarActivity {
     private final String LOG_TAG = FavouriteActivity.class.getSimpleName();
-    private PerformanceAdapter performanceAdapter;
+    private ArraySwipeAdapter<String> swipePerformAdapter;
     private SessionManager session;
-    private ArrayList<String> astring;
+
     private ProgressDialog pDialog;
 
     @Override
@@ -52,7 +58,7 @@ public class FavouriteActivity extends ActionBarActivity {
         StringRequest strReq = new StringRequest(
                 Request.Method.POST,
                 AppConfig.URL_PROFILE,
-                new Response.Listener<String>(){
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         hideDialog();
@@ -61,14 +67,57 @@ public class FavouriteActivity extends ActionBarActivity {
 
                             JSONObject jObj = new JSONObject(response);
                             final String[] strings = Utility.getPerformanceDataFromJson(jObj);
-                            astring = new ArrayList<>(Arrays.asList(strings));
+                            final ArrayList<String> astring = new ArrayList<>(Arrays.asList(strings));
 
-                            performanceAdapter = new PerformanceAdapter(
+                            swipePerformAdapter = new ArraySwipeAdapter<String>(
                                     FavouriteActivity.this,
+                                    R.layout.swipe_item,
                                     astring
-                            );
+                            ) {
 
-                            listView.setAdapter(performanceAdapter);
+                                @Override
+                                public int getSwipeLayoutResourceId(int i) {
+                                    return R.id.swipe_sample;
+                                }
+
+                                @Override
+                                public View getView(final int position, View convertView, ViewGroup parent) {
+                                    final View v = LayoutInflater.from(FavouriteActivity.this).inflate(R.layout.swipe_item,
+                                            null, false);
+
+                                    ImageView leftIcon = (ImageView) v.findViewById(R.id.list_item_icon);
+                                    TextView upperLabel = (TextView) v.findViewById(R.id.list_item_musician);
+                                    TextView lowerLeftLabel = (TextView) v.findViewById(R.id.list_item_time);
+                                    TextView lowerRightLabel = (TextView) v.findViewById(R.id.list_item_place);
+
+                                    String s = astring.get(position);
+                                    String[] temp = s.split("&-&");
+
+                                    upperLabel.setText(temp[0]);
+                                    lowerLeftLabel.setText(temp[1]);
+                                    lowerRightLabel.setText(temp[2]);
+
+                                    final String pid = temp[7];
+
+                                    ImageView imageView = (ImageView) v.findViewById(R.id.image);
+                                    imageView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(R.id.swipe_sample);
+                                            swipeLayout.close();
+                                            deleteItem(uuid, pid);
+
+                                            astring.remove(position);
+                                            notifyDataSetChanged();
+                                        }
+                                    });
+
+                                    return v;
+                                }
+
+                            };
+
+                            listView.setAdapter(swipePerformAdapter);
 
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
@@ -97,7 +146,7 @@ public class FavouriteActivity extends ActionBarActivity {
                 }
 
 
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
@@ -109,7 +158,6 @@ public class FavouriteActivity extends ActionBarActivity {
             }
         };
         MySingleton.getInstance(this).addToRequestQueue(strReq);
-
 
 
     }
@@ -131,5 +179,49 @@ public class FavouriteActivity extends ActionBarActivity {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
+
+    private void deleteItem(final String uniqueID, final String pid) {
+        StringRequest strReq = new StringRequest(
+                Request.Method.POST,
+                AppConfig.URL_LIKE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            boolean error = jObj.getBoolean("error");
+                            if (error){
+                                Toast.makeText(getApplicationContext(),
+                                        jObj.getString("error_msg"),
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(getApplicationContext(),
+                                volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("tag", "delete");
+                params.put("uuid", uniqueID);
+                params.put("p_id",pid);
+
+                return params;
+            }
+        };
+
+        MySingleton.getInstance(this).addToRequestQueue(strReq);
+    }
+
 
 }

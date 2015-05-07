@@ -136,6 +136,13 @@ class DB_Functions {
 
     }
 
+    public function  deleteFavourite($uuid, $p_id){
+        $query = "DELETE FROM favourite WHERE uuid = '$uuid' AND p_id = ".$p_id.";";
+        $data = mysqli_query($this->con, $query);
+        $num = mysqli_affected_rows($this->con);
+        return $num;
+    }
+
 }
 
 ?>

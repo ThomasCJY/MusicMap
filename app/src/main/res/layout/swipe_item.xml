@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="80dp"
+    android:id="@+id/swipe_sample"
+    >
+    <!-- Bottom View Start-->
+    <LinearLayout
+        android:background="#fffff4f4"
+        android:id="@+id/bottom_wrapper"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_height="match_parent">
+        <!--What you want to show-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:id="@+id/image"
+            android:src="@drawable/ic_delete"
+            android:maxWidth="60dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+    </LinearLayout>
+    <!-- Bottom View End-->
+
+    <!-- Surface View Start -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_icon"
+            android:src="@drawable/ic_launcher"/>
+
+        <LinearLayout
+            android:layout_width= "match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/list_item_musician"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingRight="16dp"
+                    android:id="@+id/list_item_time"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="16dp"
+                    android:id="@+id/list_item_place"
+                    android:textSize="15dp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!-- Surface View End -->
+</com.daimajia.swipe.SwipeLayout>

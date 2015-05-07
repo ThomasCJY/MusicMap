@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:support-v4:22.1.1'
     compile files('src/libs/java-json.jar')
     compile files('src/libs/volley.jar')
+    compile files('src/libs/AndroidSwipeLayout-v1.1.8.jar')
 }
