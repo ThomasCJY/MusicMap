@@ -113,7 +113,6 @@ public class ProfileActivity extends Activity {
         });
 
         // Favourite Activity button click event
-
         picImg.setOnClickListener(new View.OnClickListener(){
 
             @Override

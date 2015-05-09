@@ -40,6 +40,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         String locationInfo = getIntent().getStringExtra("LString");
 //        Log.e(LOG_TAG, locationInfo);
 
+        // Set the initial camera locate according to the setting information
         switch (locationInfo){
             case "nanjing":
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(nanjingLatLng,ZOOMFLOATE));
@@ -59,8 +60,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         for(String ast : strings){
             String[] parser = ast.split("&-&");
+            // Get the location information
             double lat = Double.parseDouble(parser[3]);
             double lng = Double.parseDouble(parser[4]);
+            // Add performance information to the marker
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lng))
                     .title(parser[0])

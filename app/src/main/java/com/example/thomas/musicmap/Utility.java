@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 
 /**
  * Created by thomas on 15-5-5.
+ *
+ * Static Helper Class
  */
 public class Utility {
     private final String LOG_TAG = Utility.class.getSimpleName();
@@ -42,6 +44,13 @@ public class Utility {
         return matcher.matches();
     }
 
+    /**
+     * Transform JSON object into String format
+     *
+     * @param performJson
+     * @return
+     * @throws JSONException
+     */
     public static String[] getPerformanceDataFromJson(JSONObject performJson)
             throws JSONException {
         final String OWM_PERFORM = "performance";

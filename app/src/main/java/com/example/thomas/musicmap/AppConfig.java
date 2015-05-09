@@ -2,6 +2,7 @@ package com.example.thomas.musicmap;
 
 /**
  * Created by thomas on 15-5-5.
+ * Store URL
  */
 public class AppConfig {
     // Server user login url

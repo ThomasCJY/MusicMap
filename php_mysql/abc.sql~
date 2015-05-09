@@ -26,7 +26,6 @@ create table `place`(
 INSERT INTO `place` VALUES(1,1,'青果', 32.059076, 118.770744);
 INSERT INTO `place` VALUES (2,1, '61LiveHouse', 32.054876 ,118.772693);
 INSERT INTO `place` VALUES (3,1,  '南京大剧院' ,32.033714, 118.775600);
-
 INSERT INTO `place` VALUES(4,2,'愚公移山', 39.933942, 116.414526);
 INSERT INTO `place` VALUES (5,2, 'MAO LiveHouse',39.941214, 116.403304);
 INSERT INTO `place` VALUES (6,2,  '麻雀瓦舍' ,39.892519, 116.473677);
@@ -40,6 +39,13 @@ INSERT INTO `place` VALUES (12,4,  'Jz Club' ,31.223126, 121.582755);
 INSERT INTO `place` VALUES(13,4,'Lola', 31.172027, 121.531257);
 INSERT INTO `place` VALUES (14,4, '贺绿汀音乐厅',31.212556, 121.459159);
 INSERT INTO `place` VALUES (15,4,  '上海大剧院' ,31.189063, 121.601295);
+
+INSERT INTO `place` VALUES(21,1,'斑马LIVEHOUSE', 32.049076, 118.770744);
+INSERT INTO `place` VALUES (16,1, '古堡', 32.055876 ,118.771586);
+INSERT INTO `place` VALUES (17,1,  '保利大剧院' ,32.043714, 118.771057);
+INSERT INTO `place` VALUES(18,2,'Vice', 39.932500, 116.447927);
+INSERT INTO `place` VALUES (19,2, '保利剧院',39.934014, 116.434967);
+INSERT INTO `place` VALUES (20,2,  '胡蝶吧' ,39.940730, 116.389332);
 
 create table `performance`(
    `performance_id` INT auto_increment,
@@ -91,6 +97,20 @@ INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (15, '2015-05-29'
 INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (8, '2015-05-14', 'Taylor Swift');
 
 
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (15, '2015-06-05', '2014');
+INSERT INTO `performance`(`place_id`,`time`,`musician`, `description`) VALUES (16, '2015-06-13', 'Jason Mraz', '杰森·玛耶兹(Jason Mraz)，绰号男巫，美国创作歌手，以强大的现场演唱功力闻名乐坛。第52届格莱美奖最佳流行男歌手得主。目前杰森已推出三张录音室专辑，其中三专《We Sing. We Dance. We Steal Things》中的单曲"I\'m Yours"最为著名，成为美国Billboard单曲榜史上在榜最长时间的歌曲(76周)，全球大卖810万张，为2009年全球单曲榜第三名，并获得第51届格莱美“年度歌曲”提名。2012年全新专辑《Love is a Four Letter Word》于4月17日发行，首单"I Won\'t Give Up"已于1月2日释出，广受好评，顺利登顶美国iTunes下载榜榜首。
+杰森·玛耶兹生于美国弗吉尼亚州列治文。毕业于位于维吉尼亚州梅卡尼克斯维尔（Mechanicsville）的Lee-Davis高中，之后在朗沃德大学学习了一小段时间。后来他到了位于纽约市的美国音乐戏剧学院（American Musical and Dramatic Academy）学习音乐剧。
+ 
+在纽约念大学期间，他以吉他创作歌曲，毕业之后更跑到圣迭戈当起街头艺人。在这段时期，杰森·玛耶兹和自称是灵媒的流浪汉成为心灵伙伴，他也开始四处流浪探索人生。在这过程当中，杰森遇到他的贵人：知名音乐人鼓手Toca Rivera。两人一同演出的现场表演纪录，当时在美国网络间广为流传。
+ 
+2002年，杰森·玛耶兹顺利获得唱片合约，推出在大厂牌的首张专辑《Waiting For My Rocket To Come》，专辑一推出随即获得全美热门潜力榜亚军，并获得了白金销售认证，当中的《The Remedy (I Won\'t Worry) 》、《You and I Both》也都成为传唱度极高的单曲。2005年发行第二张原创大碟《Mr. A-Z》，立即空降美国告示牌（Billboard）首五名位置，而杰森·玛耶兹擅长把玩文字的创意，也在这张专辑里充分的发挥。
+ 
+在发行两张专辑、参加无数现场表演以及一连串的宣传行程之后，杰森利用一年的时间，让自己回归到一般生活里。在回归简单生活的几个月之后，让他脑中充满源源不绝的创作灵感，集结成他的第三张专辑《We Sing, We Dance, We Steal Things》，这位被歌迷喻为“悠活才子”的歌手在第三张原创专辑中展现自我。');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (17, '2015-06-24', 'Kasabian');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (18, '2015-06-22', 'Bruno Marz');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (19, '2015-06-11', 'Follow Me Down');
+INSERT INTO `performance`(`place_id`,`time`,`musician`) VALUES (20, '2015-06-04', 'Norah Jones');
+
 
 create table `user`(
     `uid` INT auto_increment,
@@ -113,4 +133,12 @@ INSERT INTO `favourite` VALUES (8, '55489ada07c119.20995428');
 INSERT INTO `favourite` VALUES (14, '55489ada07c119.20995428');
 INSERT INTO `favourite` VALUES (18, '55489ada07c119.20995428');
 INSERT INTO `favourite` VALUES (20, '55489ada07c119.20995428');
+
+
+
+
+
+
+
+
 

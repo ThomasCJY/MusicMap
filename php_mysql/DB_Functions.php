@@ -21,9 +21,10 @@ class DB_Functions {
         $this->con = $this->db->connect();
     }
 
-    // destructor
+    // destructor, disconnect the database when
+    // the class is removed
     function __destruct() {
-
+        mysqli_close($this->con);
     }
 
     /**
@@ -83,6 +84,9 @@ class DB_Functions {
         }
     }
 
+    /**
+     * Get user information by unique_id
+     */
     public function getUserByUUID($uuid){
         $query = "SELECT name, email from user WHERE unique_id = '$uuid';";
         $result = mysqli_query($this->con, $query );
@@ -95,6 +99,13 @@ class DB_Functions {
         }
     }
 
+    /**
+     * @param $uuid
+     * @return array
+     *
+     * Acquire user's favourite performance information
+     * according to user's unique_id
+     */
     public function getPerformanceByUUID($uuid){
         $query_1 = "SELECT p_id from favourite WHERE uuid = '$uuid';";
         $id_array = mysqli_query($this->con, $query_1);
@@ -129,6 +140,14 @@ class DB_Functions {
         return $arr;
     }
 
+
+    /**
+     * @param $uuid
+     * @param $p_id
+     * @return TRUE OR FALSE
+     *
+     * Add Favourite infomation into SQL
+     */
     public function insertFavourite($uuid, $p_id){
         $query = "INSERT INTO favourite VALUES(". $p_id .",'$uuid');";
         $data = mysqli_query($this->con, $query);
@@ -136,6 +155,13 @@ class DB_Functions {
 
     }
 
+    /**
+     * @param $uuid
+     * @param $p_id
+     * @return Number of rows that effected
+     *
+     * Delete the match record in the favourite table
+     */
     public function  deleteFavourite($uuid, $p_id){
         $query = "DELETE FROM favourite WHERE uuid = '$uuid' AND p_id = ".$p_id.";";
         $data = mysqli_query($this->con, $query);

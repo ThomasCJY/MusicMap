@@ -6,7 +6,7 @@
  * Time: 上午10:27
  */
 $url = 'http://localhost/androidProject/like.php';
-$data = array('tag'=>'delete','uuid' => '55489ada07c119.20995428','p_id' => 16);
+$data = array('tag'=>'like','uuid' => '55489ada07c119.20995428','p_id' => 16);
 
 // use key 'http' even if you send the request to https://...
 $options = array(

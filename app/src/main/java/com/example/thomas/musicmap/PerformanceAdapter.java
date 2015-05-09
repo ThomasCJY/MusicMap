@@ -12,9 +12,12 @@ import java.util.ArrayList;
 
 /**
  * Created by thomas on 15-5-3.
+ *
+ * Customized Adapter with comfortable UI interface
+ *
  */
 public class PerformanceAdapter extends ArrayAdapter {
-    private ArrayList<String> list;
+    private ArrayList<String> list; //Stores all the performance information
     private Context context;
 
     public PerformanceAdapter(Context context, ArrayList<String> arraylist) {

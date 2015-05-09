@@ -4,12 +4,27 @@
  * User: thomas
  * Date: 15-5-6
  * Time: 下午3:02
+ *
+ * This is the php file which deals with operations on the
+ * favourite table.
+ *
+ * The format of POST information is:
+ * 1, tag:"like"; uuid:"$unique_id"; pid:"$performance_id";
+ * 2, tag:"delete"; uuid:"$unique_id"; pid:"$performance_id";
+ *
+ * The response of the php file is:
+ * 1,like tag:"like"
+ * a) error:FALSE;
+ * b) error:TRUE; error_msg:"xxxxxx";
+ *
+ * 2,delete tag:"delete"
+ * a) error:FALSE
+ * b) error:TRUE; error_msg:"xxxxxx";
+ *
  */
 if (isset($_POST['tag']) && $_POST['tag'] != '') {
-    // get tag
     $tag = $_POST['tag'];
 
-    // include db handler
     require_once 'DB_Functions.php';
     $db = new DB_Functions();
 

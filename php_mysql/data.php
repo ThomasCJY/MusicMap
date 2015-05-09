@@ -1,16 +1,31 @@
 <?php
-require_once('config.php');
-// Clear the error message
-$error_msg = "";
 
-// Connect to the database
+/**
+ * Deal with the request of performance data.
+ * There are three params in URL, location, date and duration.
+ * The php file would send JSON format data according to
+ * the request.
+ *
+ * The response JSON format is:
+ * {
+ * performance:[JSON ARRAY]
+ * (The items in the array)
+ * ...pid:"performance_id"; time:"performance_date"; musician:"xxxxxx";
+ * ...description:"xxxxxxx"; city:"city_name";
+ * ...place:
+ * ......{pname:"place_name", lat:latitude, lng:longitude}
+ * }
+ *
+ */
+
+require_once('config.php');
+$error_msg = "";
 
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
 mysqli_set_charset($dbc, 'utf8');
 if (!$dbc) {
     die('Could not connect: ' . mysql_error());
 }
-
 
 // Grab the basic data from url
 $location = $_REQUEST['location'];
@@ -31,9 +46,11 @@ if ($duration == 'week') {
     $time_query = "time > '$date'";
 }
 
+//query the place information
 $query_1 = "SELECT * from place where city_id =(SELECT city_id FROM city WHERE city_name= '$location');";
 $data_place = mysqli_query($dbc, $query_1);
 
+//Construct JSON format data
 $arr = array();
 while ($row = mysqli_fetch_array($data_place)) {
     $query_2 = "SELECT * from performance where place_id = " . $row['place_id'] . " AND $time_query ;";

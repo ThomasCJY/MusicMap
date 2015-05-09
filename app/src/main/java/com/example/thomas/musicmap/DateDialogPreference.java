@@ -19,6 +19,8 @@ import java.util.GregorianCalendar;
 
 /**
  * Created by thomas on 15-5-4.
+ * A Customized Preference which deals shows the
+ * DatePicker Dialog in settings.
  */
 public class DateDialogPreference extends DialogPreference implements
         DatePicker.OnDateChangedListener {

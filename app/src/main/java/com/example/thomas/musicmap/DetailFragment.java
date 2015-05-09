@@ -3,7 +3,6 @@ package com.example.thomas.musicmap;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,14 +27,16 @@ import java.util.Map;
 
 /**
  * Created by thomas on 15-5-3.
+ * When user click on the list item, the app will create this
+ * fragment.
  */
 public class DetailFragment extends Fragment {
     //content is used to convey information
 
     private final String LOG_TAG = DetailFragment.class.getSimpleName();
     private String content;
-    private String settingLocation;
-    private String pid;
+    private String settingLocation;  //Store the location from intent and convey it to the MapView
+    private String pid;  //Store the performance id from intent and convey it to addToFavourite();
 
     public DetailFragment() {
     }
@@ -106,9 +107,12 @@ public class DetailFragment extends Fragment {
     }
 
     private void addToFavourite() {
+        // Before the POST action, we should first get unique_id and
+        // p_id(Pid is a global final param)
         SessionManager session = new SessionManager(getActivity());
         final String uuid = session.checkUID();
 
+        // Construct String Request
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 AppConfig.URL_LIKE, new Response.Listener<String>() {
 
@@ -116,9 +120,9 @@ public class DetailFragment extends Fragment {
             public void onResponse(String response) {
                 try {
                     JSONObject jObj = new JSONObject(response);
-                    Log.e(LOG_TAG,response);
+//                    Log.e(LOG_TAG,response);
                     boolean error = jObj.getBoolean("error");
-                    Log.e(LOG_TAG,String.valueOf(error));
+//                    Log.e(LOG_TAG,String.valueOf(error));
                     if (!error){
                         Toast.makeText(getActivity(), "Add into your favourites!",
                                 Toast.LENGTH_LONG).show();

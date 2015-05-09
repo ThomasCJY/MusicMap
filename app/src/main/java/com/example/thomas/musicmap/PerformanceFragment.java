@@ -34,9 +34,8 @@ import java.util.Date;
  */
 public class PerformanceFragment extends Fragment {
     private final String LOG_TAG = PerformanceFragment.class.getSimpleName();
-    private String[] strings;
-    private String settingLocation;
-
+    private String[] strings; //Stores All the performance information in customized String format
+    private String settingLocation; //Stores location name in setting preference
     private PerformanceAdapter performanceAdapter;
 
     /**
@@ -123,7 +122,6 @@ public class PerformanceFragment extends Fragment {
     private void updatePerformance() {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
         String location = prefs.getString(getString(R.string.pref_location_key),
                 getString(R.string.pref_location_default));
         settingLocation = location;

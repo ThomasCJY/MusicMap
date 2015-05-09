@@ -33,24 +33,24 @@ import java.util.Map;
 
 public class FavouriteActivity extends ActionBarActivity {
     private final String LOG_TAG = FavouriteActivity.class.getSimpleName();
-    private ArraySwipeAdapter<String> swipePerformAdapter;
+    private ArraySwipeAdapter<String> swipePerformAdapter; //An imported class which constructs a
+                                                           //Swipe Adapter
     private SessionManager session;
-
     private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
+
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-
         pDialog.setMessage("Getting Information...");
         showDialog();
 
+        //Get unique_id
         session = new SessionManager(getApplicationContext());
-
         final String uuid = session.checkUID();
 
         // POST unique_id to the server
@@ -64,9 +64,8 @@ public class FavouriteActivity extends ActionBarActivity {
                         hideDialog();
                         ListView listView = (ListView) findViewById(R.id.listView_performance);
                         try {
-
                             JSONObject jObj = new JSONObject(response);
-                            final String[] strings = Utility.getPerformanceDataFromJson(jObj);
+                            String[] strings = Utility.getPerformanceDataFromJson(jObj);
                             final ArrayList<String> astring = new ArrayList<>(Arrays.asList(strings));
 
                             swipePerformAdapter = new ArraySwipeAdapter<String>(
@@ -99,12 +98,15 @@ public class FavouriteActivity extends ActionBarActivity {
 
                                     final String pid = temp[7];
 
+                                    // When click on the delete icon, delete the information
+                                    // from the database
                                     ImageView imageView = (ImageView) v.findViewById(R.id.image);
                                     imageView.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
                                             SwipeLayout swipeLayout = (SwipeLayout) v.findViewById(R.id.swipe_sample);
                                             swipeLayout.close();
+
                                             deleteItem(uuid, pid);
 
                                             astring.remove(position);
@@ -119,10 +121,11 @@ public class FavouriteActivity extends ActionBarActivity {
 
                             listView.setAdapter(swipePerformAdapter);
 
+                            //While clicking on list item, start Detail Activity
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                    String content = strings[i];
+                                    String content = astring.get(i);
                                     Intent intent = new Intent(FavouriteActivity.this, PerformanceDetail.class);
                                     intent.putExtra(Intent.EXTRA_TEXT, content);
                                     startActivity(intent);
@@ -180,6 +183,13 @@ public class FavouriteActivity extends ActionBarActivity {
             pDialog.dismiss();
     }
 
+    /**
+     *
+     * Send Message to Server to delete the row in favourite table
+     * where uuid = uniqueID, p_id = pid
+     * @param uniqueID
+     * @param pid
+     */
     private void deleteItem(final String uniqueID, final String pid) {
         StringRequest strReq = new StringRequest(
                 Request.Method.POST,
@@ -210,7 +220,6 @@ public class FavouriteActivity extends ActionBarActivity {
         ) {
             @Override
             protected Map<String, String> getParams() {
-                // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("tag", "delete");
                 params.put("uuid", uniqueID);
